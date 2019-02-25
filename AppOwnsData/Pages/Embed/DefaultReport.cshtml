@@ -1,0 +1,42 @@
+﻿@page
+@model AppOwnsData.Pages.Embed.DefaultReportModel
+@{
+    ViewData["Title"] = "DefaultReport";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Default Report</h2>
+
+<div id="reportContainer" style="width: 80%; height: 600px;"></div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://rawgit.com/Microsoft/PowerBI-JavaScript/master/dist/powerbi.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GetDefaultReport", "PowerBI")",
+            contentType: "application/json; charset=utf-8",
+            success: function (json) {
+                var models = window['powerbi-client'].models;
+                var embedConfiguration = {
+                    type: 'report',
+                    id: json.reportId,
+                    embedUrl: json.embedUrl,
+                    tokenType: models.TokenType.Embed,
+                    accessToken: json.embedToken
+                };
+                console.log(embedConfiguration);
+                var $reportContainer = $('#reportContainer');
+                var report = powerbi.embed($reportContainer.get(0), embedConfiguration);
+
+
+            },
+            error: function (x) {
+                debugger;
+                alert("Error", x);
+            }
+        });
+
+    });
+</script>

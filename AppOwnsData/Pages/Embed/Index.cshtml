@@ -1,0 +1,46 @@
+﻿@page
+@model AppOwnsData.Pages.Embed.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <h2>Demo</h2>
+    <p></p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Example</th>
+            
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Showing default report to users</td>
+                <td> <a href="~/Embed/DefaultReport" class="btn btn-success">Demo</a></td>
+            </tr>
+            <tr>
+                <td>List of all report</td>
+                <td><a href="~/Embed/ReportList" class="btn btn-success">Demo</a></td>
+            </tr>
+            <tr>
+                <td>List of all dashboard</td>
+                <td><a href="~/Embed/DashboardList" class="btn btn-success">Demo</a></td>
+            </tr>
+            <tr>
+                <td> List of tiles with in a dahboard</td>
+                <td><a href="~/Embed/TileList" class="btn btn-success">Demo</a></td>
+            </tr>
+            <tr>
+                <td> List of Dataset </td>
+                <td><a href="~/Embed/DatasetList" class="btn btn-success">Demo</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+

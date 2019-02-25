@@ -1,0 +1,54 @@
+﻿@page
+@model AppOwnsData.Pages.Embed.DatasetListModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://rawgit.com/Microsoft/PowerBI-JavaScript/master/dist/powerbi.min.js"></script>
+<div class="container">
+    <h2>Demo</h2>
+    <p></p>
+    <table id="datasetList" class="table col-sm-6">
+        <thead>
+            <tr>
+                <th>Id </th>
+                <th>Dataset Name</th>
+                <th>Configured By</th>
+              
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <hr style="width:20px;" />
+    <div id="datasetContainer" class="col-sm-6" style="width:80%; height:600px"></div>
+</div>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GetDatasetList", "PowerBI")",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+
+                var comma = "'";
+                var htmlResult = "";
+                $.each(result, function (key, val) {
+                    console.log(val);
+                    htmlResult += '<tr><td>' + val.id + '</td><td>' + val.name + '</td><td>' + val.configuredBy + '</td></tr>'
+
+                });
+                $("#datasetList tbody").html(htmlResult);
+
+
+            },
+            error: function (x) {
+                debugger
+                alert("Error", x);
+            }
+        });
+
+
+    });
+
+   
+</script>

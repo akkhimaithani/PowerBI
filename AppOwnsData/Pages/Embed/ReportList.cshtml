@@ -1,0 +1,96 @@
+﻿@page
+@model AppOwnsData.Pages.Embed.ReportListModel
+@{
+    ViewData["Title"] = "ReportListModel";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://rawgit.com/Microsoft/PowerBI-JavaScript/master/dist/powerbi.min.js"></script>
+<div class="container">
+    <h2>Demo</h2>
+    <p></p>
+    <table id="dashboardList" class="table col-sm-6">
+        <thead>
+            <tr>
+                <th>Report Name</th>
+                <th>Id</th>
+                <th>Embed</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <hr style="width:20px;" />
+    <div id="reportContainer" class="col-sm-6" style="width:100%; height:600px"></div>
+</div>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GetReportList", "PowerBI")",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+
+                var comma = "'";
+                var htmlResult = "";
+                $.each(result, function (key, val) {
+                    console.log(val);
+                    htmlResult += '<tr><td>' + val.name + '</td><td>' + val.id + '</td><td><button class="btn btn-primary" onclick="bindReport(' + comma + val.id + comma+' )">Embed</button></td></tr>'
+
+                });
+$("#dashboardList tbody").html(htmlResult);
+
+
+            },
+            error: function (x) {
+                debugger;
+                alert("Error", x);
+            }
+        });
+
+
+    });
+    var int = 0;
+    function bindReport(reportId) {
+        var temp = int - 1;
+        var tempAreaID = "child" + temp;
+        var areaID = "child" + int;
+        var x = $("#" + tempAreaID).length;
+        if ($("#" + tempAreaID).length == 0) {
+
+        }
+        else {
+            console.log("Exist");
+            $("#" + tempAreaID).remove();
+        }
+        $('<div id="' + areaID + '" class="col-lg-12" style="width:100%; height:100%"></div>').appendTo('#reportContainer');
+
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GetReportByReportId", "PowerBI")",
+            data: { "reportId": reportId },
+            contentType: "application/json; charset=utf-8",
+            success: function (json) {
+                var models = window['powerbi-client'].models;
+                var embedConfiguration = {
+                    type: 'report',
+                    id: json.reportId,
+                    embedUrl: json.embedUrl,
+                    tokenType: models.TokenType.Embed,
+                    accessToken: json.embedToken
+                };
+                var $reportContainer = $('#' + areaID + '');
+               powerbi.embed($reportContainer.get(0), embedConfiguration);
+                int = int + 1;
+
+            },
+            error: function (x) {
+                debugger;
+                alert("Error", x);
+            }
+        });
+    }
+
+
+
+</script>
