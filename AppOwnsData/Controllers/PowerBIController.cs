@@ -187,7 +187,7 @@ namespace AppOwnsData.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all dashboard list with in a workspace
         /// </summary>
         /// <returns></returns>
         [Route("/getDashboardList")]
@@ -220,7 +220,7 @@ namespace AppOwnsData.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get dashboard by dashboard id
         /// </summary>
         /// <param name="dashboardId"></param>
         /// <returns></returns>
@@ -280,7 +280,7 @@ namespace AppOwnsData.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get tiles list with in a dashboard 
         /// </summary>
         /// <param name="dashboardId"></param>
         /// <returns></returns>
@@ -314,7 +314,7 @@ namespace AppOwnsData.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get individual tiles from the dashboard on bases of dashboard tile key
         /// </summary>
         /// <param name="tileKey"></param>
         /// <param name="dashboardKey"></param>
@@ -375,7 +375,7 @@ namespace AppOwnsData.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all dataset list with in a workspace
         /// </summary>
         /// <returns></returns>
 
